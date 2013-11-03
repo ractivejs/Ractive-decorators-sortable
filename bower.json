@@ -1,0 +1,12 @@
+{
+	"name": "ractive-decorators-sortable",
+	"version": "0.1.0",
+	"author": "Rich Harris",
+	"main": "Ractive-decorators-sortable.js",
+	"ignore": [
+		"**/.*",
+		"src",
+		"test",
+		"Gruntfile.js"
+	]
+}
