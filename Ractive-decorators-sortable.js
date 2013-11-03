@@ -5,7 +5,10 @@
 
 	Version 0.1.0.
 
-	<< description goes here... >>
+	This plugin adds a 'sortable' decorator to Ractive, which enables
+	elements that correspond to array members to be re-ordered using
+	the HTML5 drag and drop API. Doing so will update the order
+	of the array.
 
 	==========================
 
@@ -26,7 +29,32 @@
 	    // the return value
 	    require( 'Ractive-decorators-sortable' );
 
-	<< more specific instructions for this plugin go here... >>
+	Then use the decorator like so:
+
+	    <!-- template -->
+	    <ul>
+	      {{#list}}
+	        <li decorator='sortable'>{{.}}</li>
+	      {{/list}}
+	    </ul>
+
+	    var ractive = new Ractive({
+	      el: myContainer,
+	      template: myTemplate,
+	      data: { list: [ 'Firefox', 'Chrome', 'Internet Explorer', 'Opera', 'Safari', 'Maxthon' ] }
+	    });
+	
+	When the user drags the source element over a target element, the
+	target element will have a class name added to it. This allows you
+	to render the target differently (e.g. hide the text, add a dashed
+	border, whatever). By default this class name is 'droptarget'.
+	
+	You can configure the class name like so:
+
+	    Ractive.decorators.sortable.targetClass = 'aDifferentClassName';
+		
+	PS for an entertaining rant about the drag and drop API, visit
+	http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html
 
 */
 
