@@ -1,0 +1,16 @@
+{
+	"name": "ractive-decorators-sortable",
+	"repo": "RactiveJS/Ractive-decorators-sortable",
+	"description": "Ractive-decorators-sortable",
+	"version": "0.1.0",
+	"keywords": [],
+	"dependencies": {
+		"RactiveJS/Ractive": "0.3.9"
+	},
+	"development": {},
+	"license": "MIT",
+	"main": "Ractive-decorators-sortable.js",
+	"scripts": [
+		"Ractive-decorators-sortable.js"
+	]
+}
