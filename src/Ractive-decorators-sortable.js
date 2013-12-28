@@ -14,7 +14,7 @@
 
 	Troubleshooting: If you're using a module system in your app (AMD or
 	something more nodey) then you may need to change the paths below,
-	where it says `require( 'ractive' )` or `define([ 'Ractive' ]...)`.
+	where it says `require( 'Ractive' )` or `define([ 'Ractive' ]...)`.
 
 	==========================
 
@@ -43,16 +43,16 @@
 	      template: myTemplate,
 	      data: { list: [ 'Firefox', 'Chrome', 'Internet Explorer', 'Opera', 'Safari', 'Maxthon' ] }
 	    });
-	
+
 	When the user drags the source element over a target element, the
 	target element will have a class name added to it. This allows you
 	to render the target differently (e.g. hide the text, add a dashed
 	border, whatever). By default this class name is 'droptarget'.
-	
+
 	You can configure the class name like so:
 
 	    Ractive.decorators.sortable.targetClass = 'aDifferentClassName';
-		
+
 	PS for an entertaining rant about the drag and drop API, visit
 	http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html
 
@@ -64,7 +64,7 @@
 
 	// Common JS (i.e. browserify) environment
 	if ( typeof module !== 'undefined' && module.exports && typeof require === 'function' ) {
-		factory( require( 'ractive' ) );
+		factory( require( 'Ractive' ) );
 	}
 
 	// AMD?
@@ -143,7 +143,7 @@
 		}
 
 		event.dataTransfer.setData( 'foo', true ); // enables dragging in FF. go figure
-		
+
 		// keep a reference to the Ractive instance that 'owns' this data and this element
 		ractive = storage.root;
 	};
