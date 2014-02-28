@@ -5,6 +5,12 @@
 		"name": "Rich Harris"
 	},
 	"main": "Ractive-decorators-sortable.js",
+	"description": "Sortable list decorator plugin for Ractive.js",
+	"jam": {
+		"dependencies": {
+			"Ractive": ">= 0.3.8"
+		}
+	},
 	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-contrib-concat": "~0.3.0",
