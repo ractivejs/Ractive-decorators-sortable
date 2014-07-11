@@ -1,7 +1,7 @@
 Ractive.js sortable decorator plugin
 ====================================
 
-*Find more Ractive.js plugins at [ractivejs.org/plugins](http://ractivejs.org/plugins)*
+*Find more Ractive.js plugins at [docs.ractivejs.org/latest/plugins](http://docs.ractivejs.org/latest/plugins)*
 
 [See the demo here.](TODO)
 
