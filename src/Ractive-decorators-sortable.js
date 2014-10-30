@@ -142,7 +142,7 @@
 			throw new Error( errorMessage );
 		}
 
-		event.dataTransfer.setData( 'foo', true ); // enables dragging in FF. go figure
+		event.dataTransfer.setData( 'text', 'foobar' ); // enables dragging in FF. go figure
 
 		// keep a reference to the Ractive instance that 'owns' this data and this element
 		ractive = storage.root;
