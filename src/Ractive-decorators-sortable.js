@@ -58,7 +58,7 @@
 
 */
 
-(function ( global, factory ) {
+var sortableDecorator = (function ( global, factory ) {
 
 	'use strict';
 
@@ -198,5 +198,11 @@
 	preventDefault = function ( event ) { event.preventDefault(); };
 
 	Ractive.decorators.sortable = sortable;
-
+	
+	return sortable
 }));
+
+// Common JS (i.e. browserify) environment
+if ( typeof module !== 'undefined' && module.exports) {
+	module.exports = sortableDecorator
+}
