@@ -64,7 +64,7 @@ var sortableDecorator = (function ( global, factory ) {
 
 	// Common JS (i.e. browserify) environment
 	if ( typeof module !== 'undefined' && module.exports && typeof require === 'function' ) {
-		factory( require( 'Ractive' ) );
+		return factory( require( 'Ractive' ) );
 	}
 
 	// AMD?
@@ -199,10 +199,10 @@ var sortableDecorator = (function ( global, factory ) {
 
 	Ractive.decorators.sortable = sortable;
 	
-	return sortable
+	return sortable;
 }));
 
 // Common JS (i.e. browserify) environment
 if ( typeof module !== 'undefined' && module.exports) {
-	module.exports = sortableDecorator
+	module.exports = sortableDecorator;
 }
