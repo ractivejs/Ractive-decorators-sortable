@@ -126,7 +126,7 @@ var sortableDecorator = (function ( global, factory ) {
 	dragstartHandler = function ( event ) {
 		var storage = this._ractive, lastDotIndex;
 
-		sourceKeypath = storage.keypath;
+		sourceKeypath = storage.keypath.str;
 
 		// this decorator only works with array members!
 		lastDotIndex = sourceKeypath.lastIndexOf( '.' );
@@ -156,7 +156,7 @@ var sortableDecorator = (function ( global, factory ) {
 			return;
 		}
 
-		targetKeypath = this._ractive.keypath;
+		targetKeypath = this._ractive.keypath.str;
 
 		// this decorator only works with array members!
 		lastDotIndex = targetKeypath.lastIndexOf( '.' );
