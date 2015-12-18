@@ -3,7 +3,7 @@
 	Ractive-decorators-sortable
 	===========================
 
-	Version 0.1.0.
+	Version 0.2.0.
 
 	This plugin adds a 'sortable' decorator to Ractive, which enables
 	elements that correspond to array members to be re-ordered using
@@ -58,18 +58,18 @@
 
 */
 
-(function ( global, factory ) {
+var sortableDecorator = (function ( global, factory ) {
 
 	'use strict';
 
 	// Common JS (i.e. browserify) environment
 	if ( typeof module !== 'undefined' && module.exports && typeof require === 'function' ) {
-		factory( require( 'Ractive' ) );
+		factory( require( 'ractive' ) );
 	}
 
 	// AMD?
 	else if ( typeof define === 'function' && define.amd ) {
-		define([ 'Ractive' ], factory );
+		define([ 'ractive' ], factory );
 	}
 
 	// browser global
@@ -126,7 +126,7 @@
 	dragstartHandler = function ( event ) {
 		var storage = this._ractive, lastDotIndex;
 
-		sourceKeypath = storage.keypath;
+		sourceKeypath = storage.keypath.str;
 
 		// this decorator only works with array members!
 		lastDotIndex = sourceKeypath.lastIndexOf( '.' );
@@ -156,7 +156,7 @@
 			return;
 		}
 
-		targetKeypath = this._ractive.keypath;
+		targetKeypath = this._ractive.keypath.str;
 
 		// this decorator only works with array members!
 		lastDotIndex = targetKeypath.lastIndexOf( '.' );
@@ -173,13 +173,16 @@
 			return;
 		}
 
+		// add droptarget class to hovered element
+		this.classList.add( sortable.targetClass );
+
 		// if it's the same index, add droptarget class then abort
 		if ( targetIndex === sourceIndex ) {
-			this.classList.add( sortable.targetClass );
 			return;
 		}
 
-		array = ractive.get( sourceArray );
+		// cloning array avoids issues on some generated arrays (TODO investigate)
+		array = ractive.get( sourceArray ).slice();
 
 		// remove source from array
 		source = array.splice( sourceIndex, 1 )[0];
@@ -189,6 +192,9 @@
 
 		// add source back to array in new location
 		array.splice( sourceIndex, 0, source );
+
+		// replace source with updated order from cloned-array (due to .slice())
+		ractive.set( sourceArray, array );
 	};
 
 	removeTargetClass = function () {
@@ -198,5 +204,11 @@
 	preventDefault = function ( event ) { event.preventDefault(); };
 
 	Ractive.decorators.sortable = sortable;
-
+	
+	return sortable;
 }));
+
+// Common JS (i.e. browserify) environment
+if ( typeof module !== 'undefined' && module.exports) {
+	module.exports = sortableDecorator;
+}
