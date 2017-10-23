@@ -3,7 +3,7 @@
 	Ractive-decorators-sortable
 	===========================
 
-	Version 0.1.0.
+	Version 0.2.0.
 
 	This plugin adds a 'sortable' decorator to Ractive, which enables
 	elements that correspond to array members to be re-ordered using
@@ -58,7 +58,7 @@
 
 */
 
-(function ( global, factory ) {
+var sortableDecorator = (function ( global, factory ) {
 
 	'use strict';
 
@@ -89,7 +89,6 @@
 		ractive,
 		sourceKeypath,
 		sourceArray,
-		sourceIndex,
 		dragstartHandler,
 		dragenterHandler,
 		removeTargetClass,
@@ -124,49 +123,33 @@
 	errorMessage = 'The sortable decorator only works with elements that correspond to array members';
 
 	dragstartHandler = function ( event ) {
-		var storage = this._ractive, lastDotIndex;
+		var context = Ractive.getContext(this);
 
-		sourceKeypath = storage.keypath;
+		sourceKeypath = context.resolve();
+		sourceArray = context.resolve('../');
 
-		// this decorator only works with array members!
-		lastDotIndex = sourceKeypath.lastIndexOf( '.' );
-
-		if ( lastDotIndex === -1 ) {
-			throw new Error( errorMessage );
-		}
-
-		sourceArray = sourceKeypath.substr( 0, lastDotIndex );
-		sourceIndex = +( sourceKeypath.substring( lastDotIndex + 1 ) );
-
-		if ( isNaN( sourceIndex ) ) {
+		if ( !Array.isArray(context.get('../')) ) {
 			throw new Error( errorMessage );
 		}
 
 		event.dataTransfer.setData( 'foo', true ); // enables dragging in FF. go figure
 
 		// keep a reference to the Ractive instance that 'owns' this data and this element
-		ractive = storage.root;
+		ractive = context.ractive;
 	};
 
 	dragenterHandler = function () {
-		var targetKeypath, lastDotIndex, targetArray, targetIndex, array, source;
+		var targetKeypath, targetArray, array, source, context;
+
+		context = Ractive.getContext(this);
 
 		// If we strayed into someone else's territory, abort
-		if ( this._ractive.root !== ractive ) {
+		if ( context.ractive !== ractive ) {
 			return;
 		}
 
-		targetKeypath = this._ractive.keypath;
-
-		// this decorator only works with array members!
-		lastDotIndex = targetKeypath.lastIndexOf( '.' );
-
-		if ( lastDotIndex === -1 ) {
-			throw new Error( errorMessage );
-		}
-
-		targetArray = targetKeypath.substr( 0, lastDotIndex );
-		targetIndex = +( targetKeypath.substring( lastDotIndex + 1 ) );
+		targetKeypath = context.resolve();
+		targetArray = context.resolve('../');
 
 		// if we're dealing with a different array, abort
 		if ( targetArray !== sourceArray ) {
@@ -174,21 +157,24 @@
 		}
 
 		// if it's the same index, add droptarget class then abort
-		if ( targetIndex === sourceIndex ) {
+		if ( targetKeypath === sourceKeypath ) {
 			this.classList.add( sortable.targetClass );
 			return;
 		}
 
-		array = ractive.get( sourceArray );
-
 		// remove source from array
-		source = array.splice( sourceIndex, 1 )[0];
+		source = ractive.get(sourceKeypath);
+		array = Ractive.splitKeypath(sourceKeypath);
+
+		ractive.splice( targetArray, array[array.length - 1], 1 );
 
 		// the target index is now the source index...
-		sourceIndex = targetIndex;
+		sourceKeypath = targetKeypath;
+
+		array = Ractive.splitKeypath(sourceKeypath);
 
 		// add source back to array in new location
-		array.splice( sourceIndex, 0, source );
+		ractive.splice( targetArray, array[array.length - 1], 0, source );
 	};
 
 	removeTargetClass = function () {
@@ -199,4 +185,10 @@
 
 	Ractive.decorators.sortable = sortable;
 
+	return sortable;
 }));
+
+// Common JS (i.e. browserify) environment
+if ( typeof module !== 'undefined' && module.exports) {
+	module.exports = sortableDecorator;
+}
