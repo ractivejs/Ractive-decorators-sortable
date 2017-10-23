@@ -166,7 +166,7 @@ var sortableDecorator = (function ( global, factory ) {
 		source = ractive.get(sourceKeypath);
 		array = Ractive.splitKeypath(sourceKeypath);
 
-		ractive.splice( targetArray, array[array.length - 1], 1 );
+		ractive.splice( targetArray, array[ array.length - 1 ], 1 );
 
 		// the target index is now the source index...
 		sourceKeypath = targetKeypath;
@@ -174,7 +174,7 @@ var sortableDecorator = (function ( global, factory ) {
 		array = Ractive.splitKeypath(sourceKeypath);
 
 		// add source back to array in new location
-		ractive.splice( targetArray, array[array.length - 1], 0, source );
+		ractive.splice( targetArray, array[ array.length - 1 ], 0, source );
 	};
 
 	removeTargetClass = function () {
