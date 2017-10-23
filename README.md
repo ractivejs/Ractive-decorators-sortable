@@ -12,7 +12,7 @@ Include this file on your page below Ractive, e.g:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/ractive@0.9.5/ractive.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/ractive-decorators-sortable@0.2.0/Ractive-sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ractive-decorators-sortable@0.2.1/Ractive-decorators-sortable.js"></script>
 ```
 
 Or, if you're using a module loader, require this module:
